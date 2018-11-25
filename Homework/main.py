@@ -4,6 +4,7 @@ from Search import Search
 
 sortorsearch = int(input("Please enter 1 for sort or 2 for search or 0 for quit: "))
 while (sortorsearch != 0):
+    # 排序算法测试
     if (sortorsearch == 1):
         len_list = int(input("Please enter a number as the length of random list (0 for quit!): "))
         while (len_list != 0):
@@ -60,39 +61,55 @@ while (sortorsearch != 0):
                 print(sort_test.initial_list_[i],end=' ')
             len_list = int(input("\nPlease enter a number as the length of random list (0 for quit!): "))
         sortorsearch = int(input("Please enter 1 for sort or 2 for search or 0 for quit: "))
+    # 查找算法测试
     elif (sortorsearch == 2):
         pass
         len_list = int(input("Please enter a number as the length of random list (0 for quit!): "))
         while (len_list != 0):
-            list = np.random.randint(0, 10, size=len_list)
+            list = np.random.randint(0, 100, size=len_list)
+            list = np.sort(list)
             for i in range(len_list):
                 print(list[i], end=' ')
             num = int(input("\nPlease enter a num that u want search: "))
             search_func = input("Please choose a sort for list"
                               "('s' for sequential search,"
                               "'q' for quick sequential search,"
+                              "'b' for binary search,"
+                              "'u' for uniform binary search,"
+                              "'t' for tree search,"
                               "):")
 
             while ((search_func != 's')
                 & (search_func != 'q')
+                & (search_func != 'b')
+                & (search_func != 'u')
+                & (search_func != 't')
             ):
                 search_func = input("Please choose a sort for list"
                                   "('s' for sequential search,"
                                   "'q' for quick sequential search,"
+                                  "'b' for binary search,"
+                                  "'u' for uniform binary search,"
+                                  "'t' for tree search,"
                                   "): ")
 
             search_test = Search(list,num)
             if (search_func == 's'):
-                result = search_test.sequential_search()
+                search_test.sequential_search()
             if (search_func == 'q'):
-                result = search_test.quick_sequential_search()
+                search_test.quick_sequential_search()
+            if (search_func == 'b'):
+                search_test.binary_search()
+            if (search_func == 'u'):
+                search_test.uniform_binary_search()
+            if (search_func == 't'):
+                search_test.tree_search()
 
-            if (len(result) != 0):
-                print("The " + str(num) + " is in index as following: ")
-                for i in range(len(result)):
-                    print(result[i],end=' ')
+            index = search_test.index_
+            if (index != len(list)):
+                print("The " + str(num) + " is in index : " + str(index))
             else:
-                print("The " + str(num) + " is not in the array")
+                print("The " + str(num) + " is not in the array.")
 
             len_list = int(input("\nPlease enter a number as the length of random list (0 for quit!): "))
 
