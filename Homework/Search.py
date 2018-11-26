@@ -83,7 +83,7 @@ class Search:
             self.index_ = 0
         else:
             # 分别记录： 节点左子树下标 节点的值在给定数组中的下标 节点右子树下标 （初始化记录第一个节点）
-            tree_array = np.array([0,0,0])
+            tree_array = np.array([[0,0,0]])
 
             # 记录每一次插入到tree_array的节点的下标
             index_tree_add = 0
@@ -92,6 +92,8 @@ class Search:
             for i in range(1,self.len_):
 
                 def insert(value,root):
+                    nonlocal tree_array # 语法查漏补缺：insert函数要修改tree_array和index_tree_add的值，因为其首次定义在上一个函数tree_search中，不是全局变量，而是嵌套作用域变量，因此不用global,而用nonlocal
+                    nonlocal index_tree_add
 
                     # 小于等于根节点
                     if (self.initial_array_[value] <= self.initial_array_[root]):
@@ -126,13 +128,14 @@ class Search:
                 insert(i,0)
 
             def search(root):
+                nonlocal tree_array
 
                 # 查找数等于根节点
                 if (self.num_ == self.initial_array_[tree_array[root][1]]):
                     self.index_ = tree_array[root][1]
                     return
                 # 查找数大于根节点，则比较右子树
-                elif (self.num > self.initial_array_[tree_array[root][1]]):
+                elif (self.num_ > self.initial_array_[tree_array[root][1]]):
                     # 如果根节点右子树不存在
                     if (tree_array[root][2] == 0):
                         return
